@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji 状态网格</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'SimSun', serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .emoji-item {
+            font-size: 48px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.3s;
+            user-select: none;
+        }
+
+        /* 未完成状态：暗淡且不可点击 */
+        .emoji-item.incomplete {
+            filter: grayscale(100%) opacity(0.3);
+            cursor: not-allowed;
+            pointer-events: none; /* 确保不可点击 */
+        }
+
+        /* 已完成状态：亮起来 */
+        .emoji-item.completed {
+            filter: none;
+            opacity: 1;
+        }
+
+        .emoji-item.completed:hover {
+            transform: scale(1.1);
+            background-color: #f5f5f5;
+        }
+
+        .back-link {
+            margin-top: 40px;
+            text-decoration: none;
+            color: #666;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #333;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .music-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .modal-overlay.active .music-card {
+            transform: scale(1);
+        }
+
+        .music-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .music-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .music-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .music-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            line-height: 1;
+            padding: 5px;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        /* Image Modal Styles */
+        .image-card {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: auto;
+            flex-direction: column;
+        }
+
+        .image-carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 10px;
+            max-width: 100%;
+            padding-bottom: 10px; /* 滚动条空间 */
+        }
+
+        .image-carousel img {
+            scroll-snap-align: center;
+            flex: 0 0 auto;
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 8px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+            object-fit: contain;
+            display: block;
+        }
+
+        /* 隐藏滚动条但保留功能 */
+        .image-carousel::-webkit-scrollbar {
+            height: 6px;
+        }
+        .image-carousel::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+            border-radius: 3px;
+        }
+        .image-carousel::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.5);
+            border-radius: 3px;
+        }
+
+        .image-card img:not(.carousel-item) {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 8px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+            object-fit: contain;
+            display: block;
+        }
+
+        .image-card .close-btn {
+            position: absolute;
+            top: -40px;
+            right: -10px;
+            color: #fff;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background 0.3s;
+            z-index: 1001;
+        }
+
+        .image-card .close-btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        
+        @media (min-width: 768px) {
+            .image-card .close-btn {
+                right: -40px;
+                top: -40px;
+            }
+        }
+
+        /* Navbar & Search Styles */
+        .navbar {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .nav-back {
+            text-decoration: none;
+            color: #666;
+            font-size: 16px;
+            transition: color 0.3s;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-back:hover {
+            color: #333;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .search-icon {
+            font-size: 16px;
+            color: #666;
+            cursor: pointer;
+            padding: 5px 12px 5px 5px;
+            user-select: none;
+            transition: color 0.3s;
+            z-index: 10;
+            font-weight: 500;
+        }
+
+        .search-icon:hover {
+            color: #333;
+        }
+
+        #searchInput {
+            width: 0;
+            padding: 0;
+            border: none;
+            outline: none;
+            background: #fff;
+            transition: width 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
+            font-size: 16px;
+            position: absolute;
+            right: 0; 
+            border-radius: 20px;
+            opacity: 0;
+            height: 36px;
+        }
+
+        #searchInput.active {
+            width: 200px;
+            padding: 5px 55px 5px 15px; /* Right padding for icon space */
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            opacity: 1;
+        }
+
+        /* Category Title Styles */
+        .category-title {
+            grid-column: 1 / -1;
+            font-size: 14px;
+            color: #999;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            padding-left: 5px;
+            font-weight: 500;
+        }
+
+        .category-title:first-child {
+            margin-top: 0;
+        }
+
+        /* Filter Styles */
+        .filter-container {
+            position: relative;
+            margin-left: 15px;
+        }
+
+        .filter-btn {
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+            user-select: none;
+            transition: color 0.3s;
+            padding: 5px;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            color: #333;
+        }
+
+        .filter-menu {
+            display: none;
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            min-width: 120px;
+            z-index: 100;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .filter-menu.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .filter-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 14px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .filter-option:hover {
+            background: #f9f9f9;
+        }
+
+        .filter-option.selected {
+            background: #f0f7ff;
+            color: #007aff;
+            font-weight: 500;
+        }
+        
+        .filter-option.selected::after {
+            content: '✓';
+            font-size: 12px;
+        }
+
+        .filter-group-title {
+            padding: 8px 20px 4px;
+            font-size: 12px;
+            color: #999;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html" class="nav-back">← 回去</a>
+        <div style="display: flex; align-items: center;">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="搜索 emoji..." oninput="filterEmojis(this.value)">
+                <div class="search-icon" onclick="toggleSearch()">搜索</div>
+            </div>
+            <div class="filter-container">
+                <div class="filter-btn" onclick="toggleFilterMenu()" title="筛选">筛选</div>
+                <div class="filter-menu" id="filterMenu">
+                    <div class="filter-group-title">状态</div>
+                    <div class="filter-option status-option" onclick="setFilter('status', 'all', this)">全部状态</div>
+                    <div class="filter-option status-option selected" onclick="setFilter('status', 'completed', this)">已完成</div>
+                    <div class="filter-option status-option" onclick="setFilter('status', 'incomplete', this)">未完成</div>
+                    
+                    <div style="height: 1px; background: #eee; margin: 5px 0;"></div>
+                    
+                    <div class="filter-group-title">分类</div>
+                    <div class="filter-option category-option selected" onclick="setFilter('category', 'all', this)">全部分类</div>
+                    <div class="filter-option category-option" onclick="setFilter('category', 'smileys_people', this)">表情与人物</div>
+                    <div class="filter-option category-option" onclick="setFilter('category', 'animals_nature', this)">动物与自然</div>
+                    <div class="filter-option category-option" onclick="setFilter('category', 'food_drink', this)">食物与饮料</div>
+                    <div class="filter-option category-option" onclick="setFilter('category', 'activity', this)">活动</div>
+                    <div class="filter-option category-option" onclick="setFilter('category', 'travel_places', this)">旅行与地点</div>
+                    <div class="filter-option category-option" onclick="setFilter('category', 'objects', this)">物体</div>
+                    <div class="filter-option category-option" onclick="setFilter('category', 'symbols', this)">符号</div>
+                    <div class="filter-option category-option" onclick="setFilter('category', 'flags', this)">旗帜</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid-container" id="emojiGrid">
+        <!-- Emoji 将通过 JS 插入这里 -->
+    </div>
+    
+    <!-- Music Modal -->
+    <div class="modal-overlay" id="musicModal">
+        <div class="music-card" onclick="window.location.href='https://y.music.163.com/m/user?id=331119785&dlt=0846&app_version=9.4.55'">
+            <div class="close-btn" onclick="event.stopPropagation(); closeMusicModal()">×</div>
+            <div class="music-logo">
+                <img src="photos/网易云音乐.png" alt="网易云音乐">
+            </div>
+            <div class="music-title">网易云音乐</div>
+            <div class="music-desc">点击跳转至个人主页</div>
+        </div>
+    </div>
+
+    <!-- Movie Modal -->
+    <div class="modal-overlay" id="movieModal">
+        <div class="music-card" onclick="window.location.href='https://www.douban.com/people/259913725/subject_doulists/movie'">
+            <div class="close-btn" onclick="event.stopPropagation(); closeMovieModal()">×</div>
+            <div class="music-logo">
+                <img src="photos/豆瓣.png" alt="豆瓣">
+            </div>
+            <div class="music-title">豆瓣</div>
+            <div class="music-desc">点击跳转至观影列表</div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div class="modal-overlay" id="imageModal">
+        <div class="image-card" onclick="event.stopPropagation();">
+            <div class="close-btn" onclick="closeImageModal()">×</div>
+            <div id="imageContainer" style="width: 100%; display: flex; justify-content: center;">
+                <img id="modalImage" src="" alt="Photo">
+            </div>
+        </div>
+    </div>
+
+    <!-- Text Modal -->
+    <div class="modal-overlay" id="textModal">
+        <div class="music-card" onclick="event.stopPropagation()">
+            <div class="close-btn" onclick="closeTextModal()">×</div>
+            <div class="music-title" id="textModalTitle"></div>
+            <div class="music-desc" id="textModalContent" style="white-space: pre-wrap; margin-top: 15px; font-size: 16px; line-height: 1.6;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Modal logic
+        const musicModal = document.getElementById('musicModal');
+        const movieModal = document.getElementById('movieModal');
+        const imageModal = document.getElementById('imageModal');
+        const textModal = document.getElementById('textModal');
+        const modalImage = document.getElementById('modalImage');
+        const textModalTitle = document.getElementById('textModalTitle');
+        const textModalContent = document.getElementById('textModalContent');
+
+
+        function showMusicModal() {
+            musicModal.style.display = 'flex';
+            // Force reflow
+            musicModal.offsetHeight;
+            musicModal.classList.add('active');
+        }
+
+        function closeMusicModal() {
+            musicModal.classList.remove('active');
+            setTimeout(() => {
+                musicModal.style.display = 'none';
+            }, 300);
+        }
+
+        function showMovieModal() {
+            movieModal.style.display = 'flex';
+            // Force reflow
+            movieModal.offsetHeight;
+            movieModal.classList.add('active');
+        }
+
+        function closeMovieModal() {
+            movieModal.classList.remove('active');
+            setTimeout(() => {
+                movieModal.style.display = 'none';
+            }, 300);
+        }
+
+        const imageContainer = document.getElementById('imageContainer');
+
+        function showImageModal(srcOrArray) {
+            imageContainer.innerHTML = ''; // 清空内容
+
+            if (Array.isArray(srcOrArray)) {
+                // 如果是图片数组，创建轮播
+                const carousel = document.createElement('div');
+                carousel.className = 'image-carousel';
+                
+                srcOrArray.forEach(src => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.alt = 'Photo';
+                    img.className = 'carousel-item';
+                    carousel.appendChild(img);
+                });
+                imageContainer.appendChild(carousel);
+            } else {
+                // 如果是单张图片
+                const img = document.createElement('img');
+                img.src = srcOrArray;
+                img.alt = 'Photo';
+                img.id = 'modalImage';
+                imageContainer.appendChild(img);
+            }
+
+            imageModal.style.display = 'flex';
+            imageModal.offsetHeight;
+            imageModal.classList.add('active');
+        }
+
+        function closeImageModal() {
+            imageModal.classList.remove('active');
+            setTimeout(() => {
+                imageModal.style.display = 'none';
+                imageContainer.innerHTML = ''; // 清理内容
+            }, 300);
+        }
+
+        function showTextModal(title, text) {
+            textModalTitle.textContent = title;
+            textModalContent.textContent = text;
+            textModal.style.display = 'flex';
+            textModal.offsetHeight;
+            textModal.classList.add('active');
+        }
+
+        function closeTextModal() {
+            textModal.classList.remove('active');
+            setTimeout(() => {
+                textModal.style.display = 'none';
+            }, 300);
+        }
+
+        // Close modal when clicking outside
+        musicModal.onclick = function(event) {
+            if (event.target === musicModal) {
+                closeMusicModal();
+            }
+        }
+
+        movieModal.onclick = function(event) {
+            if (event.target === movieModal) {
+                closeMovieModal();
+            }
+        }
+
+        imageModal.onclick = function(event) {
+            if (event.target === imageModal) {
+                closeImageModal();
+            }
+        }
+
+        textModal.onclick = function(event) {
+            if (event.target === textModal) {
+                closeTextModal();
+            }
+        }
+
+        const gridContainer = document.getElementById('emojiGrid');
+        let allEmojisData = [];
+        let currentKeyword = '';
+        // 状态筛选：'all', 'completed', 'incomplete'
+        let currentStatusFilter = 'completed';
+        // 分类筛选：'all', 'smileys_people', etc.
+        let currentCategoryFilter = 'all';
+
+        function toggleSearch() {
+            const input = document.getElementById('searchInput');
+            input.classList.toggle('active');
+            if (input.classList.contains('active')) {
+                input.focus();
+            } else {
+                input.value = '';
+                filterEmojis(''); // Reset search keyword
+            }
+        }
+
+        function toggleFilterMenu() {
+            const menu = document.getElementById('filterMenu');
+            menu.classList.toggle('active');
+            
+            // Close menu when clicking outside
+            if (menu.classList.contains('active')) {
+                document.addEventListener('click', closeFilterMenuOutside);
+            } else {
+                document.removeEventListener('click', closeFilterMenuOutside);
+            }
+        }
+
+        function closeFilterMenuOutside(e) {
+            if (!e.target.closest('.filter-container')) {
+                document.getElementById('filterMenu').classList.remove('active');
+                document.removeEventListener('click', closeFilterMenuOutside);
+            }
+        }
+
+        /**
+         * 设置过滤器
+         * @param {string} type - 'status' 或 'category'
+         * @param {string} value - 筛选值
+         * @param {HTMLElement} element - 点击的 DOM 元素
+         */
+        function setFilter(type, value, element) {
+            if (type === 'status') {
+                currentStatusFilter = value;
+                // 清除状态组的选中状态
+                document.querySelectorAll('.status-option').forEach(opt => opt.classList.remove('selected'));
+            } else if (type === 'category') {
+                currentCategoryFilter = value;
+                // 清除分类组的选中状态
+                document.querySelectorAll('.category-option').forEach(opt => opt.classList.remove('selected'));
+            }
+            
+            // 设置当前点击项为选中
+            element.classList.add('selected');
+            
+            // Close menu
+            document.getElementById('filterMenu').classList.remove('active');
+            document.removeEventListener('click', closeFilterMenuOutside);
+            
+            // Apply filter
+            applyFilters();
+        }
+
+        function filterEmojis(keyword) {
+            if (keyword !== undefined) {
+                currentKeyword = keyword;
+            }
+            applyFilters();
+        }
+
+        const categoryNames = {
+            'smileys_people': '表情与人物',
+            'animals_nature': '动物与自然',
+            'food_drink': '食物与饮料',
+            'activity': '活动',
+            'travel_places': '旅行与地点',
+            'objects': '物体',
+            'symbols': '符号',
+            'flags': '旗帜',
+            'others': '其他'
+        };
+
+        function applyFilters() {
+            const lowerKeyword = currentKeyword.toLowerCase();
+            
+            const filtered = allEmojisData.filter(item => {
+                // Keyword match
+                const keywordMatch = !currentKeyword || 
+                    item.name.toLowerCase().includes(lowerKeyword) || 
+                    item.char.includes(lowerKeyword);
+                
+                // Status match
+                let statusMatch = true;
+                if (currentStatusFilter === 'completed') {
+                    statusMatch = item.completed;
+                } else if (currentStatusFilter === 'incomplete') {
+                    statusMatch = !item.completed;
+                }
+                
+                // Category match
+                let categoryMatch = true;
+                if (currentCategoryFilter !== 'all') {
+                    categoryMatch = item.category === currentCategoryFilter;
+                }
+                
+                return keywordMatch && statusMatch && categoryMatch;
+            });
+            
+            renderEmojis(filtered);
+        }
+        
+        // 从 JSON 文件加载 Emoji 数据
+        fetch('emojis.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(emojis => {
+                allEmojisData = emojis;
+                applyFilters();
+            })
+            .catch(error => {
+                console.error('Error loading emojis:', error);
+                gridContainer.innerHTML = '<p style="text-align:center; width:100%;">加载数据失败，请确保使用本地服务器运行 (Live Server) 或检查 emojis.json 是否存在。</p>';
+            });
+
+        function renderEmojis(emojis) {
+            // 清空当前内容
+            gridContainer.innerHTML = '';
+            
+            if (emojis.length === 0) {
+                gridContainer.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999; padding: 20px;">没有找到相关 Emoji</p>';
+                return;
+            }
+
+            // 如果当前没有按分类筛选，则显示分类标题
+            const showCategories = currentCategoryFilter === 'all';
+            
+            let lastCategory = null;
+
+            // 渲染 Emoji 网格
+            emojis.forEach(item => {
+                // Insert category header if needed
+                if (showCategories && item.category && item.category !== lastCategory) {
+                    const titleDiv = document.createElement('div');
+                    titleDiv.className = 'category-title';
+                    titleDiv.textContent = categoryNames[item.category] || item.category;
+                    gridContainer.appendChild(titleDiv);
+                    lastCategory = item.category;
+                }
+
+                const div = document.createElement('div');
+                div.className = `emoji-item ${item.completed ? 'completed' : 'incomplete'}`;
+                div.textContent = item.char;
+                div.title = item.name + (item.completed ? ' (已完成)' : ' (未完成)');
+                
+                if (item.completed) {
+                    div.onclick = () => {
+                        // 音乐 emoji 的 unicode: 🎵 或 \uD83C\uDFB5
+                        // 电影 emoji 的 unicode: 🎬 或 \uD83C\uDFAC
+                        // 注意：JSON 中的 unicode 字符已经被解析，所以这里可以直接比较字符
+                        // 或者比较 unicode 编码点
+                        if (item.text) {
+                            showTextModal(item.name, item.text);
+                        } else if (item.char === '🎵' || item.char === '\uD83C\uDFB5') { 
+                            showMusicModal();
+                        } else if (item.char === '🎬' || item.char === '\uD83C\uDFAC') {
+                            showMovieModal();
+                        } else if (item.images && item.images.length > 0) {
+                            showImageModal(item.images);
+                        }
+                    };
+                }
+
+                gridContainer.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>

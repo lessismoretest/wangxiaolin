@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王晓林</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'SimSun', serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .quote {
+            font-size: 32px;
+            line-height: 1.8;
+            color: #000000;
+            text-align: center;
+            max-width: 800px;
+            white-space: pre-line;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .emoji {
+            font-size: 48px;
+            line-height: 1;
+            text-align: center;
+            margin-bottom: 12px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .quote {
+                font-size: 24px;
+                line-height: 1.6;
+            }
+            .emoji {
+                font-size: 36px;
+                margin-bottom: 10px;
+            }
+        }
+
+        .footer-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .footer-image {
+            width: 80px;
+            height: auto;
+            opacity: 0.9;
+            display: block;
+        }
+
+        .social-footer {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 25px;
+            z-index: 90;
+            animation: fadeIn 1s ease-out;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.3s;
+        }
+
+        .social-icon:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .image-card {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: auto;
+            flex-direction: column;
+        }
+
+        .image-card img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            object-fit: contain;
+            display: block;
+        }
+
+        .image-card .close-btn {
+            position: absolute;
+            top: -40px;
+            right: -10px;
+            color: #fff;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background 0.3s;
+            z-index: 1001;
+        }
+
+        .image-card .close-btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        
+        @media (min-width: 768px) {
+            .image-card .close-btn {
+                right: -40px;
+                top: -40px;
+            }
+        }
+
+        .colorful-link {
+            /* Apple 风格渐变：类似 Apple Intelligence 或 Siri 的柔和高饱和流体渐变 */
+            background: linear-gradient(135deg, #5AC8FA, #5856D6, #FF2D55, #FF9500);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        .colorful-link:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="emoji" aria-hidden="true">🌹</div>
+    <div class="quote">
+        你未看此花时，
+        此花与汝心同归于寂；
+        你来看此花时，
+        则此花<a href="emoji_grid.html" class="colorful-link">颜色</a>一时明白起来，
+        便知此花不在你心外。
+    </div>
+    <div class="footer-container">
+        <img src="resource/小王子.png" alt="小王子" class="footer-image">
+    </div>
+
+    <div class="social-footer">
+        <img src="resource/抖音.svg" alt="抖音" class="social-icon" onclick="showImageModal('resource/抖音.JPG')">
+        <img src="resource/网易云音乐.svg" alt="网易云音乐" class="social-icon" onclick="showImageModal('resource/网易云音乐.JPG')">
+        <img src="resource/微信.svg" alt="微信" class="social-icon" onclick="showImageModal('resource/微信.JPG')">
+    </div>
+
+    <!-- Image Modal -->
+    <div class="modal-overlay" id="imageModal">
+        <div class="image-card" onclick="event.stopPropagation();">
+            <div class="close-btn" onclick="closeImageModal()">×</div>
+            <img id="modalImage" src="" alt="Photo">
+        </div>
+    </div>
+
+    <script>
+        const imageModal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+
+        function showImageModal(src) {
+            modalImage.src = src;
+            imageModal.style.display = 'flex';
+            // Force reflow
+            imageModal.offsetHeight;
+            imageModal.classList.add('active');
+        }
+
+        function closeImageModal() {
+            imageModal.classList.remove('active');
+            setTimeout(() => {
+                imageModal.style.display = 'none';
+                modalImage.src = '';
+            }, 300);
+        }
+
+        // Close modal when clicking outside
+        imageModal.onclick = function(event) {
+            if (event.target === imageModal) {
+                closeImageModal();
+            }
+        }
+    </script>
+</body>
