@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emoji 状态网格</title>
+    <title>Emoji</title>
     <style>
         * {
             margin: 0;
@@ -248,12 +248,12 @@
         .nav-back {
             text-decoration: none;
             color: #666;
-            font-size: 16px;
+            font-size: 24px;
             transition: color 0.3s;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            font-weight: normal;
+            padding: 5px;
+            line-height: 1;
+            display: inline-block;
         }
 
         .nav-back:hover {
@@ -267,14 +267,16 @@
         }
 
         .search-icon {
-            font-size: 16px;
+            font-size: 24px;
             color: #666;
             cursor: pointer;
-            padding: 5px 12px 5px 5px;
+            padding: 5px;
             user-select: none;
             transition: color 0.3s;
             z-index: 10;
-            font-weight: 500;
+            font-weight: normal;
+            line-height: 1;
+            transform: scaleX(-1);
         }
 
         .search-icon:hover {
@@ -298,7 +300,7 @@
 
         #searchInput.active {
             width: 200px;
-            padding: 5px 55px 5px 15px; /* Right padding for icon space */
+            padding: 5px 40px 5px 15px; /* Right padding for icon space */
             border: 1px solid #ddd;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             opacity: 1;
@@ -327,12 +329,13 @@
 
         .filter-btn {
             cursor: pointer;
-            font-size: 16px;
+            font-size: 24px;
             color: #666;
             user-select: none;
             transition: color 0.3s;
             padding: 5px;
-            font-weight: 500;
+            font-weight: normal;
+            line-height: 1;
         }
 
         .filter-btn:hover {
@@ -398,14 +401,14 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="index.html" class="nav-back">← 回去</a>
+        <a href="index.html" class="nav-back" title="返回">←</a>
         <div style="display: flex; align-items: center;">
             <div class="search-container">
                 <input type="text" id="searchInput" placeholder="搜索 emoji..." oninput="filterEmojis(this.value)">
-                <div class="search-icon" onclick="toggleSearch()">搜索</div>
+                <div class="search-icon" onclick="toggleSearch()" title="搜索">⌕</div>
             </div>
             <div class="filter-container">
-                <div class="filter-btn" onclick="toggleFilterMenu()" title="筛选">筛选</div>
+                <div class="filter-btn" onclick="toggleFilterMenu()" title="筛选">≡</div>
                 <div class="filter-menu" id="filterMenu">
                     <div class="filter-group-title">状态</div>
                     <div class="filter-option status-option" onclick="setFilter('status', 'all', this)">全部状态</div>
@@ -468,10 +471,11 @@
 
     <!-- Text Modal -->
     <div class="modal-overlay" id="textModal">
-        <div class="music-card" onclick="event.stopPropagation()">
+        <div class="music-card" id="textModalCard" onclick="event.stopPropagation()">
             <div class="close-btn" onclick="closeTextModal()">×</div>
             <div class="music-title" id="textModalTitle"></div>
             <div class="music-desc" id="textModalContent" style="white-space: pre-wrap; margin-top: 15px; font-size: 16px; line-height: 1.6;"></div>
+            <div id="textModalImages" style="margin-top: 15px; width: 100%; display: none;"></div>
         </div>
     </div>
 
@@ -481,9 +485,11 @@
         const movieModal = document.getElementById('movieModal');
         const imageModal = document.getElementById('imageModal');
         const textModal = document.getElementById('textModal');
+        const textModalCard = document.getElementById('textModalCard');
         const modalImage = document.getElementById('modalImage');
         const textModalTitle = document.getElementById('textModalTitle');
         const textModalContent = document.getElementById('textModalContent');
+        const textModalImages = document.getElementById('textModalImages');
 
 
         function showMusicModal() {
@@ -554,18 +560,75 @@
             }, 300);
         }
 
-        function showTextModal(title, text) {
+        function showTextModal(title, text, images, videos) {
             textModalTitle.textContent = title;
             textModalContent.textContent = text;
+            textModalImages.innerHTML = ''; // 清空旧内容
+            
+            const hasImages = images && images.length > 0;
+            const hasVideos = videos && videos.length > 0;
+
+            if (hasImages || hasVideos) {
+                // 调整模态框宽度以适应内容
+                textModalCard.style.maxWidth = '500px'; 
+                
+                const carousel = document.createElement('div');
+                carousel.className = 'image-carousel';
+                carousel.style.paddingBottom = '5px';
+                
+                // 处理视频
+                if (hasVideos) {
+                    const videoArray = Array.isArray(videos) ? videos : [videos];
+                    videoArray.forEach(src => {
+                        const video = document.createElement('video');
+                        video.src = src;
+                        video.controls = true; // 显示控制条
+                        video.className = 'carousel-item';
+                        video.style.maxHeight = '300px';
+                        video.style.maxWidth = '100%'; // 确保视频不超过容器宽度
+                        carousel.appendChild(video);
+                    });
+                }
+
+                // 处理图片
+                if (hasImages) {
+                    const imgArray = Array.isArray(images) ? images : [images];
+                    
+                    imgArray.forEach(src => {
+                        const img = document.createElement('img');
+                        img.src = src;
+                        img.alt = 'Photo';
+                        img.className = 'carousel-item';
+                        img.style.maxHeight = '300px'; // 限制高度
+                        img.onclick = (e) => {
+                            e.stopPropagation();
+                            showImageModal(src);
+                            // 确保图片模态框在文字模态框之上
+                            imageModal.style.zIndex = '1002';
+                        }; 
+                        carousel.appendChild(img);
+                    });
+                }
+                
+                textModalImages.appendChild(carousel);
+                textModalImages.style.display = 'block';
+            } else {
+                textModalCard.style.maxWidth = '320px'; // 恢复默认宽度
+                textModalImages.style.display = 'none';
+            }
+
             textModal.style.display = 'flex';
             textModal.offsetHeight;
             textModal.classList.add('active');
+            // 确保文字模态框层级
+            textModal.style.zIndex = '1001';
         }
 
         function closeTextModal() {
             textModal.classList.remove('active');
             setTimeout(() => {
                 textModal.style.display = 'none';
+                textModal.style.zIndex = ''; // 重置层级
             }, 300);
         }
 
@@ -762,7 +825,7 @@
                         // 注意：JSON 中的 unicode 字符已经被解析，所以这里可以直接比较字符
                         // 或者比较 unicode 编码点
                         if (item.text) {
-                            showTextModal(item.name, item.text);
+                            showTextModal(item.char + ' ' + item.name, item.text, item.images, item.videos);
                         } else if (item.char === '🎵' || item.char === '\uD83C\uDFB5') { 
                             showMusicModal();
                         } else if (item.char === '🎬' || item.char === '\uD83C\uDFAC') {
