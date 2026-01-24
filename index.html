@@ -38,6 +38,12 @@
             text-align: center;
             margin-bottom: 12px;
             animation: fadeIn 1s ease-out;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .emoji:hover {
+            transform: scale(1.1);
         }
 
         @keyframes fadeIn {
@@ -48,6 +54,17 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInCenter {
+            from {
+                opacity: 0;
+                transform: translate(-50%, 10px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
             }
         }
 
@@ -68,6 +85,7 @@
             right: 20px;
             z-index: 100;
             animation: fadeIn 1s ease-out;
+            cursor: pointer;
         }
 
         .footer-image {
@@ -75,22 +93,35 @@
             height: auto;
             opacity: 0.9;
             display: block;
+            transition: transform 0.3s;
+        }
+
+        .footer-container:hover .footer-image {
+            transform: scale(1.1);
         }
 
         .social-footer {
             position: fixed;
             bottom: 30px;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(20px);
             display: flex;
             gap: 25px;
             z-index: 90;
-            animation: fadeIn 1s ease-out;
             background: rgba(255, 255, 255, 0.8);
             padding: 10px 20px;
             border-radius: 30px;
             backdrop-filter: blur(5px);
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-out;
+        }
+
+        .social-footer.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
         }
 
         .social-icon {
@@ -176,31 +207,15 @@
                 top: -40px;
             }
         }
-
-        .colorful-link {
-            /* Apple 风格渐变：类似 Apple Intelligence 或 Siri 的柔和高饱和流体渐变 */
-            background: linear-gradient(135deg, #5AC8FA, #5856D6, #FF2D55, #FF9500);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-decoration: none;
-            cursor: pointer;
-            font-weight: bold;
-            transition: opacity 0.3s;
-        }
-
-        .colorful-link:hover {
-            opacity: 0.8;
-        }
     </style>
 </head>
 <body>
-    <div class="emoji" aria-hidden="true">🌹</div>
+    <div class="emoji" aria-hidden="true" onclick="window.location.href='emoji_grid.html'">🌹</div>
     <div class="quote">
         你未看此花时，
         此花与汝心同归于寂；
         你来看此花时，
-        则此花<a href="emoji_grid.html" class="colorful-link">颜色</a>一时明白起来，
+        则此花颜色一时明白起来，
         便知此花不在你心外。
     </div>
     <div class="footer-container">
@@ -210,7 +225,10 @@
     <div class="social-footer">
         <img src="resource/抖音.svg" alt="抖音" class="social-icon" onclick="showImageModal('resource/抖音.JPG')">
         <img src="resource/网易云音乐.svg" alt="网易云音乐" class="social-icon" onclick="showImageModal('resource/网易云音乐.JPG')">
+        <img src="resource/哔哩哔哩.svg" alt="哔哩哔哩" class="social-icon" onclick="showImageModal('resource/bilibili.PNG')">
         <img src="resource/微信.svg" alt="微信" class="social-icon" onclick="showImageModal('resource/微信.JPG')">
+        <img src="resource/Pinterest.svg" alt="Pinterest" class="social-icon" onclick="window.open('https://pin.it/52Z37WIwO', '_blank')">
+        <img src="resource/github.svg" alt="GitHub" class="social-icon" onclick="window.open('https://github.com/lessismoretest?tab=repositories', '_blank')">
     </div>
 
     <!-- Image Modal -->
@@ -247,5 +265,58 @@
                 closeImageModal();
             }
         }
+
+        /**
+         * 社交网络悬浮窗交互逻辑
+         * 功能：
+         * 1. 鼠标悬停在小王子图片上时显示悬浮窗
+         * 2. 鼠标悬停在悬浮窗上时保持显示
+         * 3. 鼠标离开两者后延迟隐藏
+         * 4. 点击小王子图片切换显示状态
+         * 5. 点击页面空白处隐藏
+         */
+        const footerContainer = document.querySelector('.footer-container');
+        const socialFooter = document.querySelector('.social-footer');
+        let hideTimeout;
+
+        // 显示悬浮窗
+        function showSocial() {
+            clearTimeout(hideTimeout);
+            socialFooter.classList.add('show');
+        }
+
+        // 隐藏悬浮窗（带延迟）
+        function hideSocial() {
+            hideTimeout = setTimeout(() => {
+                socialFooter.classList.remove('show');
+            }, 300);
+        }
+
+        // 绑定事件
+        // 1. 小王子图片交互
+        footerContainer.addEventListener('mouseenter', showSocial);
+        footerContainer.addEventListener('mouseleave', hideSocial);
+        
+        // 点击小王子图片（适配移动端和点击习惯）
+        footerContainer.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (socialFooter.classList.contains('show')) {
+                // 如果已经显示，再次点击不操作，或者可以设计为关闭
+                // 这里选择不关闭，保持显示，除非点击外部
+            } else {
+                showSocial();
+            }
+        });
+
+        // 2. 悬浮窗本身交互（防止鼠标移入悬浮窗时消失）
+        socialFooter.addEventListener('mouseenter', showSocial);
+        socialFooter.addEventListener('mouseleave', hideSocial);
+
+        // 3. 点击外部关闭
+        document.addEventListener('click', (e) => {
+            if (!footerContainer.contains(e.target) && !socialFooter.contains(e.target)) {
+                socialFooter.classList.remove('show');
+            }
+        });
     </script>
 </body>

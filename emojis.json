@@ -1809,11 +1809,13 @@
     },
     {
         "char": "🦴",
-        "completed": false,
+        "completed": true,
         "name": "骨头",
         "category": "smileys_people",
         "text": "",
-        "images": []
+        "images": [
+            "photos/骨折.jpeg"
+        ]
     },
     {
         "char": "👀",
@@ -3519,11 +3521,13 @@
     },
     {
         "char": "🧑‍🦽",
-        "completed": false,
+        "completed": true,
         "name": "坐手动轮椅的人",
         "category": "smileys_people",
         "text": "",
-        "images": []
+        "images": [
+            "photos/轮椅.jpeg"
+        ]
     },
     {
         "char": "🧑‍🦽‍➡️",
@@ -4519,7 +4523,7 @@
     },
     {
         "char": "🐶",
-        "completed": true,
+        "completed": false,
         "name": "养狗",
         "category": "animals_nature",
         "text": "",
@@ -4527,11 +4531,13 @@
     },
     {
         "char": "🐕️",
-        "completed": false,
+        "completed": true,
         "name": "狗",
         "category": "animals_nature",
-        "text": "",
-        "images": []
+        "text": "能撸则撸",
+        "images": [
+            "photos/dog.jpeg"
+        ]
     },
     {
         "char": "🦮",
@@ -4583,19 +4589,21 @@
     },
     {
         "char": "🐱",
-        "completed": true,
-        "name": "养猫",
+        "completed": false,
+        "name": "猫咪",
         "category": "animals_nature",
         "text": "",
         "images": []
     },
     {
         "char": "🐈️",
-        "completed": false,
+        "completed": true,
         "name": "猫",
         "category": "animals_nature",
-        "text": "",
-        "images": []
+        "text": "能撸则撸",
+        "images": [
+            "photos/cat.jpeg"
+        ]
     },
     {
         "char": "🐈‍⬛",
@@ -4671,7 +4679,7 @@
     },
     {
         "char": "🦄",
-        "completed": false,
+        "completed": true,
         "name": "独角兽",
         "category": "animals_nature",
         "text": "",
@@ -5286,14 +5294,6 @@
         "images": []
     },
     {
-        "char": "🫍",
-        "completed": false,
-        "name": "虎鲸",
-        "category": "animals_nature",
-        "text": "",
-        "images": []
-    },
-    {
         "char": "🦭",
         "completed": false,
         "name": "海豹",
@@ -5575,10 +5575,10 @@
     },
     {
         "char": "🌹",
-        "completed": false,
+        "completed": true,
         "name": "玫瑰",
         "category": "animals_nature",
-        "text": "",
+        "text": "也许世界上也有五千朵和你一模一样的花，但只有你是我独一无二的玫瑰 ————《小王子》",
         "images": []
     },
     {
@@ -5591,7 +5591,7 @@
     },
     {
         "char": "🌺",
-        "completed": true,
+        "completed": false,
         "name": "赏花",
         "category": "animals_nature",
         "text": "",
@@ -5615,10 +5615,10 @@
     },
     {
         "char": "🌷",
-        "completed": false,
+        "completed": true,
         "name": "郁金香",
         "category": "animals_nature",
-        "text": "",
+        "text": "这花儿是真好看，很花儿！",
         "images": []
     },
     {
@@ -5631,7 +5631,7 @@
     },
     {
         "char": "🌱",
-        "completed": true,
+        "completed": false,
         "name": "园艺",
         "category": "animals_nature",
         "text": "",
@@ -5647,7 +5647,7 @@
     },
     {
         "char": "🌲",
-        "completed": true,
+        "completed": false,
         "name": "森林",
         "category": "animals_nature",
         "text": "",
@@ -5776,7 +5776,7 @@
         ]
     },
     {
-        "char": "⚡",
+        "char": "⚡️",
         "completed": false,
         "name": "闪电",
         "category": "animals_nature",
@@ -5833,10 +5833,10 @@
     },
     {
         "char": "🍌",
-        "completed": false,
+        "completed": true,
         "name": "香蕉",
         "category": "food_drink",
-        "text": "",
+        "text": "必须熟透！！！",
         "images": []
     },
     {
@@ -5884,7 +5884,7 @@
         "completed": false,
         "name": "桃子",
         "category": "food_drink",
-        "text": "",
+        "text": "绝对不能带毛！！！",
         "images": []
     },
     {
@@ -5921,10 +5921,10 @@
     },
     {
         "char": "🍅",
-        "completed": false,
+        "completed": true,
         "name": "番茄",
         "category": "food_drink",
-        "text": "",
+        "text": "西红柿就得配鸡蛋",
         "images": []
     },
     {
@@ -5961,10 +5961,10 @@
     },
     {
         "char": "🥔",
-        "completed": false,
+        "completed": true,
         "name": "土豆",
         "category": "food_drink",
-        "text": "",
+        "text": "万能的土豆",
         "images": []
     },
     {
@@ -5972,7 +5972,7 @@
         "completed": false,
         "name": "胡萝卜",
         "category": "food_drink",
-        "text": "",
+        "text": "不喜欢吃，虽然可以明目",
         "images": []
     },
     {
@@ -5985,10 +5985,10 @@
     },
     {
         "char": "🌶️",
-        "completed": false,
+        "completed": true,
         "name": "辣椒",
         "category": "food_drink",
-        "text": "",
+        "text": "当然可以",
         "images": []
     },
     {
@@ -6009,10 +6009,10 @@
     },
     {
         "char": "🥬",
-        "completed": false,
+        "completed": true,
         "name": "绿叶蔬菜",
         "category": "food_drink",
-        "text": "",
+        "text": "半个素食主义者，手动狗头",
         "images": []
     },
     {
@@ -6041,10 +6041,10 @@
     },
     {
         "char": "🥜",
-        "completed": false,
+        "completed": true,
         "name": "花生",
         "category": "food_drink",
-        "text": "",
+        "text": "花毛一体",
         "images": []
     },
     {
@@ -6057,7 +6057,7 @@
     },
     {
         "char": "🌰",
-        "completed": false,
+        "completed": true,
         "name": "栗子",
         "category": "food_drink",
         "text": "",
@@ -6068,7 +6068,7 @@
         "completed": false,
         "name": "姜",
         "category": "food_drink",
-        "text": "",
+        "text": "坚决不要，最恨土豆混姜丝",
         "images": []
     },
     {
@@ -6097,7 +6097,7 @@
     },
     {
         "char": "🍞",
-        "completed": false,
+        "completed": true,
         "name": "面包",
         "category": "food_drink",
         "text": "",
@@ -6212,7 +6212,7 @@
         "completed": false,
         "name": "薯条",
         "category": "food_drink",
-        "text": "",
+        "text": "肯德基的粗薯还不错，其他都一般般",
         "images": []
     },
     {
@@ -6233,7 +6233,7 @@
     },
     {
         "char": "🥪",
-        "completed": false,
+        "completed": true,
         "name": "三明治",
         "category": "food_drink",
         "text": "",
@@ -6249,7 +6249,7 @@
     },
     {
         "char": "🌯",
-        "completed": false,
+        "completed": true,
         "name": "卷饼",
         "category": "food_drink",
         "text": "",
@@ -6281,7 +6281,7 @@
     },
     {
         "char": "🥚",
-        "completed": false,
+        "completed": true,
         "name": "鸡蛋",
         "category": "food_drink",
         "text": "",
@@ -6305,7 +6305,7 @@
     },
     {
         "char": "🍲",
-        "completed": false,
+        "completed": true,
         "name": "火锅",
         "category": "food_drink",
         "text": "",
@@ -6409,7 +6409,7 @@
     },
     {
         "char": "🍜",
-        "completed": true,
+        "completed": false,
         "name": "面食",
         "category": "food_drink",
         "text": "",
@@ -6425,10 +6425,10 @@
     },
     {
         "char": "🍠",
-        "completed": false,
+        "completed": true,
         "name": "烤红薯",
         "category": "food_drink",
-        "text": "",
+        "text": "这玩意儿好吃的是真好吃 😋",
         "images": []
     },
     {
@@ -6832,7 +6832,7 @@
         "images": []
     },
     {
-        "char": "☕",
+        "char": "☕️",
         "completed": true,
         "name": "咖啡",
         "category": "food_drink",
@@ -6977,7 +6977,7 @@
     },
     {
         "char": "🎁",
-        "completed": true,
+        "completed": false,
         "name": "礼物",
         "category": "activity",
         "text": "",
@@ -7180,7 +7180,7 @@
         "completed": true,
         "name": "羽毛球",
         "category": "activity",
-        "text": "",
+        "text": "好多年没打了，小时候经常和爸爸打",
         "images": []
     },
     {
@@ -7225,18 +7225,18 @@
     },
     {
         "char": "🎣",
-        "completed": false,
+        "completed": true,
         "name": "钓鱼",
         "category": "activity",
-        "text": "",
+        "text": "老了再钓试试",
         "images": []
     },
     {
         "char": "🤿",
-        "completed": false,
+        "completed": true,
         "name": "潜水",
         "category": "activity",
-        "text": "",
+        "text": "学会游泳后，得潜一下。。",
         "images": []
     },
     {
@@ -7249,10 +7249,10 @@
     },
     {
         "char": "🎿",
-        "completed": false,
+        "completed": true,
         "name": "滑雪",
         "category": "activity",
-        "text": "",
+        "text": "尝试过几次，还没学会😂",
         "images": []
     },
     {
@@ -7281,19 +7281,21 @@
     },
     {
         "char": "🪀",
-        "completed": false,
+        "completed": true,
         "name": "悠悠球",
         "category": "activity",
-        "text": "",
+        "text": "小时候常玩悠悠球",
         "images": []
     },
     {
         "char": "🪁",
-        "completed": false,
+        "completed": true,
         "name": "风筝",
         "category": "activity",
         "text": "",
-        "images": []
+        "images": [
+            "photos/风筝.jpeg"
+        ]
     },
     {
         "char": "🔫",
@@ -7393,10 +7395,10 @@
     },
     {
         "char": "🪆",
-        "completed": false,
+        "completed": true,
         "name": "套娃",
         "category": "activity",
-        "text": "",
+        "text": "送过人",
         "images": []
     },
     {
@@ -7521,22 +7523,22 @@
     },
     {
         "char": "🏄",
-        "completed": false,
+        "completed": true,
         "name": "冲浪",
         "category": "activity",
-        "text": "",
+        "text": "学会游泳后，就可以 surfing 了，也mark一下",
         "images": []
     },
     {
         "char": "🏊",
-        "completed": false,
+        "completed": true,
         "name": "游泳",
         "category": "activity",
-        "text": "",
+        "text": "还不会，必须学会，mark一下",
         "images": []
     },
     {
-        "char": "⚽",
+        "char": "⚽️",
         "completed": false,
         "name": "足球",
         "category": "activity",
@@ -7574,7 +7576,8 @@
         "category": "activity",
         "text": "",
         "images": [
-            "photos/IMG_4048.JPG"
+            "photos/IMG_4048.JPG",
+            "photos/动森.JPG"
         ]
     },
     {
@@ -8019,11 +8022,12 @@
     },
     {
         "char": "🌇",
-        "completed": false,
+        "completed": true,
         "name": "日落",
         "category": "travel_places",
-        "text": "",
-        "images": []
+        "text": "在草原见过暮山紫的日落，在莫日格勒河见过浮光跃金的日落，可惜再好的设备也拍不出来显示不出来，只能用眼睛去看，用心去看。",
+        "images": [],
+        "videos": []
     },
     {
         "char": "🌉",
@@ -8035,10 +8039,10 @@
     },
     {
         "char": "♨️",
-        "completed": false,
+        "completed": true,
         "name": "温泉",
         "category": "travel_places",
-        "text": "",
+        "text": "这玩意到底是温泉还是Java，Java我还懂一点点",
         "images": []
     },
     {
@@ -8067,7 +8071,7 @@
     },
     {
         "char": "🎢",
-        "completed": false,
+        "completed": true,
         "name": "过山车",
         "category": "travel_places",
         "text": "",
@@ -8075,10 +8079,10 @@
     },
     {
         "char": "💈",
-        "completed": false,
+        "completed": true,
         "name": "理发店",
         "category": "travel_places",
-        "text": "",
+        "text": "迄今没几个满意的tony",
         "images": []
     },
     {
@@ -8219,10 +8223,10 @@
     },
     {
         "char": "🚑️",
-        "completed": false,
+        "completed": true,
         "name": "救护车",
         "category": "travel_places",
-        "text": "",
+        "text": "躺过好几次了，比较有发言权。。。",
         "images": []
     },
     {
@@ -8270,7 +8274,7 @@
         "completed": true,
         "name": "驾驶",
         "category": "travel_places",
-        "text": "",
+        "text": "算不上老司机",
         "images": []
     },
     {
@@ -8323,18 +8327,10 @@
     },
     {
         "char": "🏎️",
-        "completed": false,
+        "completed": true,
         "name": "赛车",
         "category": "travel_places",
-        "text": "",
-        "images": []
-    },
-    {
-        "char": "🏍️",
-        "completed": false,
-        "name": "摩托车",
-        "category": "travel_places",
-        "text": "",
+        "text": "小时候常玩赛车玩具，真家伙还没来得及试。",
         "images": []
     },
     {
@@ -8371,10 +8367,10 @@
     },
     {
         "char": "🚲️",
-        "completed": false,
+        "completed": true,
         "name": "自行车",
         "category": "travel_places",
-        "text": "",
+        "text": "我会大撒把，用屁股骑车，嘿嘿😏曾经我特别特别特别想手把手的教会一个姑娘骑自行车，但是没有机会了。",
         "images": []
     },
     {
@@ -8387,10 +8383,10 @@
     },
     {
         "char": "🛹",
-        "completed": false,
+        "completed": true,
         "name": "滑板",
         "category": "travel_places",
-        "text": "",
+        "text": "小时候玩得很溜很爽，现在不会了。。。",
         "images": []
     },
     {
@@ -8566,7 +8562,7 @@
         "completed": true,
         "name": "旅行",
         "category": "travel_places",
-        "text": "",
+        "text": "一个人坐一排，躺着睡觉，空姐递来小毯子，调来升降机接我下飞机，单开一辆摆渡大巴车送我出机场，对残疾人服务确实不错，得点个赞😁",
         "images": []
     },
     {
@@ -8963,11 +8959,13 @@
     },
     {
         "char": "🌕️",
-        "completed": false,
+        "completed": true,
         "name": "满月",
         "category": "travel_places",
         "text": "",
-        "images": []
+        "images": [
+            "photos/满月.jpeg"
+        ]
     },
     {
         "char": "🌖",
@@ -9108,7 +9106,7 @@
         "completed": true,
         "name": "看云",
         "category": "travel_places",
-        "text": "",
+        "text": "晓看天色暮看云",
         "images": [
             "photos/IMG_4122.JPG"
         ]
@@ -9262,7 +9260,7 @@
         "completed": true,
         "name": "赏雪",
         "category": "travel_places",
-        "text": "",
+        "text": "小时候雪能淹没膝盖，再也没有过了，不过依旧喜欢漫天飞❄️。",
         "images": []
     },
     {
@@ -9324,41 +9322,35 @@
         "images": []
     },
     {
-        "char": "⛰",
+        "char": "⛰️",
         "completed": true,
-        "name": "爬山",
+        "name": "山",
         "category": "travel_places",
-        "text": "",
+        "text": "我见青山多妩媚，料青山见我应如是",
         "images": [
             "photos/IMG_4121.JPG"
         ]
     },
     {
-        "char": "⛺",
+        "char": "⛺️",
         "completed": true,
         "name": "露营",
         "category": "travel_places",
-        "text": "",
+        "text": "软糯糯的绵羊有什么可怕的呢，可是一群绵羊深夜在你身边反复溜达，那声音真的像人，根本不跟睡，坐起来，握着帐篷地钉，全副武装硬壳衣，就怕绵羊冲进我帐篷，幻想了无数次被冲锋的样子。。。",
         "images": [
             "photos/DSC00854_Original_Original.JPG"
         ]
-    },
-    {
-        "char": "🚑",
-        "completed": false,
-        "name": "救护车",
-        "category": "travel_places",
-        "text": "",
-        "images": []
     },
     {
         "char": "🏍",
         "completed": true,
         "name": "摩托车",
         "category": "travel_places",
-        "text": "",
+        "text": "cm300，cb400x，duke390，gsx250，跟人生一样，下一辆会是什么呢？",
         "images": [
-            "photos/IMG_3203-transformed2.jpg"
+            "photos/IMG_3203-transformed2.jpg",
+            "photos/cb400x.webp",
+            "photos/cm300.webp"
         ]
     },
     {
@@ -9370,7 +9362,7 @@
         "images": []
     },
     {
-        "char": "⚓",
+        "char": "⚓️",
         "completed": false,
         "name": "锚",
         "category": "travel_places",
@@ -9378,7 +9370,7 @@
         "images": []
     },
     {
-        "char": "⛵",
+        "char": "⛵️",
         "completed": false,
         "name": "帆船",
         "category": "travel_places",
@@ -9443,10 +9435,10 @@
     },
     {
         "char": "👖",
-        "completed": false,
+        "completed": true,
         "name": "牛仔裤",
         "category": "objects",
-        "text": "",
+        "text": "认准 Levi’s 501",
         "images": []
     },
     {
@@ -9614,7 +9606,7 @@
         "completed": true,
         "name": "球鞋",
         "category": "objects",
-        "text": "",
+        "text": "New Balance 574 就挺好的 ~",
         "images": []
     },
     {
@@ -9675,10 +9667,10 @@
     },
     {
         "char": "👑",
-        "completed": false,
+        "completed": true,
         "name": "皇冠",
         "category": "objects",
-        "text": "",
+        "text": "刚看了一眼我 QQ 还真有 1 个皇冠了",
         "images": []
     },
     {
@@ -9731,11 +9723,13 @@
     },
     {
         "char": "📿",
-        "completed": false,
+        "completed": true,
         "name": "念珠",
         "category": "objects",
-        "text": "",
-        "images": []
+        "text": "一个信佛的大姐送我的，照顾了我很久，人很好。",
+        "images": [
+            "photos/佛珠.jpeg"
+        ]
     },
     {
         "char": "💄",
@@ -9907,7 +9901,7 @@
     },
     {
         "char": "🎷",
-        "completed": true,
+        "completed": false,
         "name": "萨克斯",
         "category": "objects",
         "text": "",
@@ -9917,14 +9911,6 @@
         "char": "🎺",
         "completed": false,
         "name": "小号",
-        "category": "objects",
-        "text": "",
-        "images": []
-    },
-    {
-        "char": "🪊",
-        "completed": false,
-        "name": "长号",
         "category": "objects",
         "text": "",
         "images": []
@@ -10014,7 +10000,7 @@
         "completed": true,
         "name": "数码",
         "category": "objects",
-        "text": "",
+        "text": "喊过niubility的几个软硬件产品：iphone4S，iPad，MacBook，quest2，chatgpt，cursor",
         "images": []
     },
     {
@@ -10270,15 +10256,15 @@
         "completed": true,
         "name": "思考",
         "category": "objects",
-        "text": "",
+        "text": "我思故我在",
         "images": []
     },
     {
         "char": "🔦",
-        "completed": false,
+        "completed": true,
         "name": "手电筒",
         "category": "objects",
-        "text": "",
+        "text": "iphone的手电筒长按可以调节，aha时刻",
         "images": []
     },
     {
@@ -10315,10 +10301,10 @@
     },
     {
         "char": "📖",
-        "completed": false,
-        "name": "打开的书本",
+        "completed": true,
+        "name": "阅读",
         "category": "objects",
-        "text": "",
+        "text": "开卷有益，infra：每日 ≥ 10 min",
         "images": []
     },
     {
@@ -10445,14 +10431,6 @@
         "char": "💰️",
         "completed": false,
         "name": "钱袋",
-        "category": "objects",
-        "text": "",
-        "images": []
-    },
-    {
-        "char": "🪎",
-        "completed": false,
-        "name": "宝箱",
         "category": "objects",
         "text": "",
         "images": []
@@ -10676,7 +10654,7 @@
     {
         "char": "📝",
         "completed": true,
-        "name": "写作",
+        "name": "备忘录",
         "category": "objects",
         "text": "不要逃避~",
         "images": []
@@ -11342,10 +11320,10 @@
     },
     {
         "char": "🪒",
-        "completed": false,
+        "completed": true,
         "name": "剃须刀",
         "category": "objects",
-        "text": "",
+        "text": "比电动的好用，且更有感觉，且好用！",
         "images": []
     },
     {
@@ -11430,10 +11408,10 @@
     },
     {
         "char": "🧯",
-        "completed": false,
+        "completed": true,
         "name": "灭火器",
         "category": "objects",
-        "text": "",
+        "text": "这个必须有且会",
         "images": []
     },
     {
@@ -11441,7 +11419,7 @@
         "completed": true,
         "name": "购物",
         "category": "objects",
-        "text": "",
+        "text": "先放进几个（visionPro、Tesla Model S Plaid），以免 Mrbeast 出没",
         "images": []
     },
     {
@@ -11517,7 +11495,7 @@
         "images": []
     },
     {
-        "char": "⌚",
+        "char": "⌚️",
         "completed": true,
         "name": "手表",
         "category": "objects",
@@ -12104,7 +12082,7 @@
     },
     {
         "char": "♏️",
-        "completed": false,
+        "completed": true,
         "name": "天蝎座",
         "category": "symbols",
         "text": "",
@@ -12951,9 +12929,9 @@
         "images": []
     },
     {
-        "char": "🈁",
+        "char": "🈁️",
         "completed": false,
-        "name": "日文的“这里”按钮",
+        "name": "“这里”按钮",
         "category": "symbols",
         "text": "",
         "images": []
@@ -12961,7 +12939,7 @@
     {
         "char": "🈂️",
         "completed": false,
-        "name": "日文的“服务费”按钮",
+        "name": "“服务费”",
         "category": "symbols",
         "text": "",
         "images": []
@@ -12969,15 +12947,15 @@
     {
         "char": "🈷️",
         "completed": false,
-        "name": "日文的“月总量”按钮",
+        "name": "“月总量”",
         "category": "symbols",
         "text": "",
         "images": []
     },
     {
-        "char": "🈶",
+        "char": "🈶️",
         "completed": false,
-        "name": "日文的“收费”按钮",
+        "name": "“收费”",
         "category": "symbols",
         "text": "",
         "images": []
@@ -12985,23 +12963,23 @@
     {
         "char": "🈯️",
         "completed": false,
-        "name": "日文的“预留”按钮",
+        "name": "“预留”",
         "category": "symbols",
         "text": "",
         "images": []
     },
     {
-        "char": "🉐",
+        "char": "🉐️",
         "completed": false,
-        "name": "日文的“议价”按钮",
+        "name": "“议价”",
         "category": "symbols",
         "text": "",
         "images": []
     },
     {
-        "char": "🈹",
+        "char": "🈹️",
         "completed": false,
-        "name": "日文的“打折”按钮",
+        "name": "“打折”",
         "category": "symbols",
         "text": "",
         "images": []
@@ -13009,55 +12987,55 @@
     {
         "char": "🈚️",
         "completed": false,
-        "name": "日文的“免费”按钮",
+        "name": "“无",
         "category": "symbols",
         "text": "",
         "images": []
     },
     {
-        "char": "🈲",
+        "char": "🈲️",
         "completed": false,
-        "name": "日文的“禁止”按钮",
+        "name": "“禁”",
         "category": "symbols",
         "text": "",
         "images": []
     },
     {
-        "char": "🉑",
+        "char": "🉑️",
         "completed": false,
-        "name": "日文的“可接受”按钮",
+        "name": "“可接受”",
         "category": "symbols",
         "text": "",
         "images": []
     },
     {
-        "char": "🈸",
+        "char": "🈸️",
         "completed": false,
-        "name": "日文的“申请”按钮",
+        "name": "“申请”按钮",
         "category": "symbols",
         "text": "",
         "images": []
     },
     {
-        "char": "🈴",
+        "char": "🈴️",
         "completed": false,
-        "name": "日文的“合格”按钮",
+        "name": "合格",
         "category": "symbols",
         "text": "",
         "images": []
     },
     {
-        "char": "🈳",
+        "char": "🈳️",
         "completed": true,
-        "name": "日文的“有空位”按钮",
+        "name": "空白",
         "category": "symbols",
-        "text": "",
+        "text": "空白承载很重要！",
         "images": []
     },
     {
         "char": "㊗️",
         "completed": false,
-        "name": "日文的“祝贺”按钮",
+        "name": "祝",
         "category": "symbols",
         "text": "",
         "images": []
@@ -13065,23 +13043,23 @@
     {
         "char": "㊙️",
         "completed": false,
-        "name": "日文的“秘密”按钮",
+        "name": "秘密",
         "category": "symbols",
         "text": "",
         "images": []
     },
     {
-        "char": "🈺",
+        "char": "🈺️",
         "completed": false,
-        "name": "日文的“开始营业”按钮",
+        "name": "“开始营业”",
         "category": "symbols",
         "text": "",
         "images": []
     },
     {
-        "char": "🈵",
+        "char": "🈵️",
         "completed": false,
-        "name": "日文的“没有空位”按钮",
+        "name": "“满",
         "category": "symbols",
         "text": "",
         "images": []
@@ -14344,10 +14322,10 @@
     },
     {
         "char": "🇮🇸",
-        "completed": false,
+        "completed": true,
         "name": "旗: 冰岛",
         "category": "flags",
-        "text": "",
+        "text": "有时间了去一趟，mark 一下，白日梦想家。",
         "images": []
     },
     {
