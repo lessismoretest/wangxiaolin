@@ -23827,10 +23827,7 @@
         "name": "摩托车",
         "category": "travel_places",
         "text": "",
-        "images": [
-            "photo/gsx250.png",
-            "photo/ktm.jpg"
-        ]
+        "images": []
     },
     {
         "char": "🛵",
