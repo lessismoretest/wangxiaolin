@@ -926,8 +926,6 @@
         const imageContainer = document.getElementById('imageContainer');
 
         let allEmojisData = [];
-        let emojisPromise = null;
-        let emojisRendered = false;
         let roseFlightSourceRect = null;
         let pendingRoseEntrance = false;
         let activeEmojiDetail = null;
@@ -960,13 +958,7 @@
             } else {
                 rosePanel.classList.toggle('is-activating', pendingRoseEntrance);
                 if (allEmojisData.length > 0) {
-                    if (!emojisRendered) {
-                        renderEmojis(allEmojisData);
-                    } else {
-                        maybeAnimateRoseEntrance();
-                    }
-                } else {
-                    loadEmojis();
+                    maybeAnimateRoseEntrance();
                 }
             }
         }
@@ -1511,7 +1503,6 @@
                 fragment.appendChild(div);
             });
             emojiGrid.appendChild(fragment);
-            emojisRendered = true;
 
             if (getSceneFromLocation() === 'emoji') {
                 maybeAnimateRoseEntrance();
@@ -1573,12 +1564,7 @@
         }
 
         function loadEmojis() {
-            if (emojisPromise) {
-                return emojisPromise;
-            }
-
-            emojiGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999; padding: 20px;">正在加载 Emoji…</p>';
-            emojisPromise = fetch('emojis.json')
+            fetch('emojis.json')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -1587,21 +1573,18 @@
                 })
                 .then(emojis => {
                     allEmojisData = sortEmojis(emojis);
-                    if (getSceneFromLocation() === 'emoji') {
-                        renderEmojis(allEmojisData);
-                    }
+                    renderEmojis(allEmojisData);
                 })
                 .catch(error => {
                     console.error('Error loading emojis:', error);
                     emojiGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999; padding: 20px;">加载数据失败，请检查 emojis.json 是否存在。</p>';
-                    emojisPromise = null;
                 });
-            return emojisPromise;
         }
 
         setAppHeight();
         bindEvents();
         syncScene(getSceneFromLocation());
+        loadEmojis();
     </script>
 </body>
 </html>
