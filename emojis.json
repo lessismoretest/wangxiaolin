@@ -20793,14 +20793,11 @@
     },
     {
         "char": "🦊",
-        "completed": true,
+        "completed": false,
         "name": "狐狸",
         "category": "animals_nature",
         "text": "",
-        "images": [
-            "resource/狐狸.png"
-        ],
-        "thumbnail": "resource/狐狸.png"
+        "images": []
     },
     {
         "char": "🦝",
@@ -21809,9 +21806,9 @@
         "category": "animals_nature",
         "text": "",
         "images": [
-            "resource/apple-rose-emoji.png"
+            "resource/apple-rose-emoji.webp"
         ],
-        "thumbnail": "resource/apple-rose-emoji.png"
+        "thumbnail": "resource/apple-rose-emoji.webp"
     },
     {
         "char": "🥀",

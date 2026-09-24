@@ -838,7 +838,7 @@
     <main class="scene home-scene is-active" id="homeScene">
         <div class="home-layout">
             <section class="rose-panel" id="rosePanel" aria-label="打开玫瑰 Emoji 场景" role="link" tabindex="0">
-                <img src="resource/apple-rose-emoji.png" alt="玫瑰" class="rose" id="homeRoseImage">
+                <img src="resource/apple-rose-emoji.webp" alt="玫瑰" class="rose" id="homeRoseImage">
             </section>
 
             <section class="content">
@@ -853,7 +853,7 @@
         </div>
 
         <div class="footer-container">
-            <img src="resource/小王子.png" alt="小王子" class="footer-image">
+            <img src="resource/小王子.webp" alt="小王子" class="footer-image">
         </div>
 
         <div class="social-footer">
@@ -925,26 +925,12 @@
         const textModalImages = document.getElementById('textModalImages');
         const imageContainer = document.getElementById('imageContainer');
 
-        const assetVersion = Date.now().toString();
         let allEmojisData = [];
+        let emojisPromise = null;
+        let emojisRendered = false;
         let roseFlightSourceRect = null;
         let pendingRoseEntrance = false;
         let activeEmojiDetail = null;
-
-        function bustAssetCache(path) {
-            if (!path || /^(https?:)?\/\//.test(path)) {
-                return path;
-            }
-            return `${path}${path.includes('?') ? '&' : '?'}v=${assetVersion}`;
-        }
-
-        function refreshStaticAssets() {
-            document.querySelectorAll('img[src^="resource/"]').forEach((img) => {
-                const originalSrc = img.dataset.assetSrc || img.getAttribute('src');
-                img.dataset.assetSrc = originalSrc;
-                img.src = bustAssetCache(originalSrc);
-            });
-        }
 
         function setAppHeight() {
             const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
@@ -974,7 +960,13 @@
             } else {
                 rosePanel.classList.toggle('is-activating', pendingRoseEntrance);
                 if (allEmojisData.length > 0) {
-                    maybeAnimateRoseEntrance();
+                    if (!emojisRendered) {
+                        renderEmojis(allEmojisData);
+                    } else {
+                        maybeAnimateRoseEntrance();
+                    }
+                } else {
+                    loadEmojis();
                 }
             }
         }
@@ -1055,7 +1047,7 @@
 
         function animateRoseFlight(sourceRect, targetRect, options = {}) {
             const overlay = document.createElement('img');
-            overlay.src = bustAssetCache('resource/apple-rose-emoji.png');
+            overlay.src = homeRoseImage.currentSrc || homeRoseImage.src;
             overlay.alt = '';
             overlay.className = 'rose-flight-image';
             return animateFlightElement(overlay, sourceRect, targetRect, options);
@@ -1116,7 +1108,7 @@
 
             if (item.thumbnail) {
                 const img = document.createElement('img');
-                img.src = bustAssetCache(item.thumbnail);
+                img.src = item.thumbnail;
                 img.alt = item.name;
                 mark.appendChild(img);
             } else {
@@ -1142,7 +1134,7 @@
 
             images.forEach((src) => {
                 const img = document.createElement('img');
-                img.src = bustAssetCache(src);
+                img.src = src;
                 img.alt = item.name;
                 img.className = 'emoji-detail-media';
                 emojiDetailContent.appendChild(img);
@@ -1150,7 +1142,7 @@
 
             videos.forEach((src) => {
                 const video = document.createElement('video');
-                video.src = bustAssetCache(src);
+                video.src = src;
                 video.controls = true;
                 video.className = 'emoji-detail-media';
                 emojiDetailContent.appendChild(video);
@@ -1224,7 +1216,7 @@
             if (Array.isArray(srcOrArray)) {
                 if (srcOrArray.length === 1) {
                     const img = document.createElement('img');
-                    img.src = bustAssetCache(srcOrArray[0]);
+                    img.src = srcOrArray[0];
                     img.alt = 'Photo';
                     img.id = 'modalImage';
                     imageContainer.appendChild(img);
@@ -1234,7 +1226,7 @@
 
                     srcOrArray.forEach(src => {
                         const img = document.createElement('img');
-                        img.src = bustAssetCache(src);
+                        img.src = src;
                         img.alt = 'Photo';
                         img.className = 'carousel-item';
                         carousel.appendChild(img);
@@ -1244,7 +1236,7 @@
                 }
             } else {
                 const img = document.createElement('img');
-                img.src = bustAssetCache(srcOrArray);
+                img.src = srcOrArray;
                 img.alt = 'Photo';
                 img.id = 'modalImage';
                 imageContainer.appendChild(img);
@@ -1280,7 +1272,7 @@
 
             if (item.thumbnail) {
                 const img = document.createElement('img');
-                img.src = bustAssetCache(item.thumbnail);
+                img.src = item.thumbnail;
                 img.alt = '';
                 textModalIcon.appendChild(img);
             } else {
@@ -1308,7 +1300,7 @@
                 if (mediaCount === 1) {
                     if (hasVideos) {
                         const video = document.createElement('video');
-                        video.src = bustAssetCache(videoArray[0]);
+                        video.src = videoArray[0];
                         video.controls = true;
                         video.style.maxHeight = '300px';
                         video.style.maxWidth = '100%';
@@ -1318,7 +1310,7 @@
                         textModalImages.appendChild(video);
                     } else {
                         const img = document.createElement('img');
-                        img.src = bustAssetCache(imageArray[0]);
+                        img.src = imageArray[0];
                         img.alt = 'Photo';
                         img.style.maxHeight = '300px';
                         img.style.maxWidth = '100%';
@@ -1340,7 +1332,7 @@
 
                     videoArray.forEach(src => {
                         const video = document.createElement('video');
-                        video.src = bustAssetCache(src);
+                        video.src = src;
                         video.controls = true;
                         video.className = 'carousel-item';
                         video.style.maxHeight = '300px';
@@ -1350,7 +1342,7 @@
 
                     imageArray.forEach(src => {
                         const img = document.createElement('img');
-                        img.src = bustAssetCache(src);
+                        img.src = src;
                         img.alt = 'Photo';
                         img.className = 'carousel-item';
                         img.style.maxHeight = '300px';
@@ -1483,6 +1475,7 @@
                 return;
             }
 
+            const fragment = document.createDocumentFragment();
             emojis.forEach(item => {
                 const div = document.createElement('div');
                 div.className = `emoji-item ${item.completed ? 'completed' : 'incomplete'}`;
@@ -1496,7 +1489,7 @@
 
                 if (item.thumbnail) {
                     const img = document.createElement('img');
-                    img.src = bustAssetCache(item.thumbnail);
+                    img.src = item.thumbnail;
                     img.alt = item.name;
                     img.className = 'emoji-thumb';
                     div.appendChild(img);
@@ -1515,8 +1508,10 @@
                     };
                 }
 
-                emojiGrid.appendChild(div);
+                fragment.appendChild(div);
             });
+            emojiGrid.appendChild(fragment);
+            emojisRendered = true;
 
             if (getSceneFromLocation() === 'emoji') {
                 maybeAnimateRoseEntrance();
@@ -1578,7 +1573,12 @@
         }
 
         function loadEmojis() {
-            fetch(bustAssetCache('emojis.json'))
+            if (emojisPromise) {
+                return emojisPromise;
+            }
+
+            emojiGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999; padding: 20px;">正在加载 Emoji…</p>';
+            emojisPromise = fetch('emojis.json')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -1587,19 +1587,21 @@
                 })
                 .then(emojis => {
                     allEmojisData = sortEmojis(emojis);
-                    renderEmojis(allEmojisData);
+                    if (getSceneFromLocation() === 'emoji') {
+                        renderEmojis(allEmojisData);
+                    }
                 })
                 .catch(error => {
                     console.error('Error loading emojis:', error);
                     emojiGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999; padding: 20px;">加载数据失败，请检查 emojis.json 是否存在。</p>';
+                    emojisPromise = null;
                 });
+            return emojisPromise;
         }
 
         setAppHeight();
-        refreshStaticAssets();
         bindEvents();
         syncScene(getSceneFromLocation());
-        loadEmojis();
     </script>
 </body>
 </html>
