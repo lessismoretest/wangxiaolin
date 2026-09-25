@@ -1393,6 +1393,35 @@
             });
         }
 
+        function revealEmojisOnScroll() {
+            if (!('IntersectionObserver' in window) ||
+                !Element.prototype.animate ||
+                window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                return;
+            }
+
+            const observer = new IntersectionObserver(entries => {
+                entries.filter(entry => entry.isIntersecting)
+                    .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top ||
+                        a.boundingClientRect.left - b.boundingClientRect.left)
+                    .forEach((entry, index) => {
+                        observer.unobserve(entry.target);
+                        entry.target.animate([
+                            { opacity: 0.45, transform: 'perspective(600px) rotateY(-12deg) translateY(8px)', transformOrigin: 'left center' },
+                            { opacity: 1, transform: 'none', transformOrigin: 'left center' }
+                        ], {
+                            duration: 420,
+                            delay: Math.min(index, 5) * 30,
+                            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+                            fill: 'backwards'
+                        });
+                    });
+            }, { root: emojiSceneInner, threshold: 0.1 });
+
+            emojiGrid.querySelectorAll('.emoji-item:not(.rose-emoji-item)')
+                .forEach(item => observer.observe(item));
+        }
+
         function maybeAnimateRoseEntrance() {
             const roseItem = document.getElementById('emoji-rose');
             if (!roseItem) {
@@ -1503,6 +1532,7 @@
                 fragment.appendChild(div);
             });
             emojiGrid.appendChild(fragment);
+            revealEmojisOnScroll();
 
             if (getSceneFromLocation() === 'emoji') {
                 maybeAnimateRoseEntrance();
