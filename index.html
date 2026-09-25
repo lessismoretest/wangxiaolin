@@ -1557,7 +1557,7 @@
             });
 
             emojiDetailView.addEventListener('click', (event) => {
-                if (event.target === emojiDetailView) {
+                if (!event.target.closest('.emoji-detail-mark, .emoji-detail-media')) {
                     closeEmojiDetail();
                 }
             });
