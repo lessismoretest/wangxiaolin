@@ -61,18 +61,18 @@
             display: flex;
             align-items: flex-end;
             justify-content: flex-start;
-            overflow: hidden;
+            overflow: visible;
             cursor: pointer;
             z-index: 3;
         }
 
         .rose {
-            --rose-x: -24%;
-            --rose-float-x: -22%;
+            --rose-x: -12%;
+            --rose-float-x: -11%;
             --rose-y: 0px;
             width: auto;
             max-width: none;
-            height: calc(var(--app-height) - (var(--page-edge-gap) * 2));
+            height: min(calc(var(--app-height) - (var(--page-edge-gap) * 2)), 60vw);
             display: block;
             transform: translateX(var(--rose-x)) translateY(var(--rose-y));
             filter: drop-shadow(0 18px 38px rgba(128, 72, 74, 0.1));
