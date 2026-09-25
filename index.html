@@ -338,7 +338,12 @@
         .emoji-item.incomplete {
             filter: grayscale(100%) opacity(0.3);
             cursor: not-allowed;
-            pointer-events: none;
+        }
+
+        @media (hover: hover) {
+            .emoji-item.incomplete:hover {
+                filter: none;
+            }
         }
 
         .emoji-item.completed:hover {
